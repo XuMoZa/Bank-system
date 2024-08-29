@@ -1,0 +1,55 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+<script src="https://unpkg.com/imask"></script>
+
+{% endblock %}
+{% block css_style %}
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+{% endblock %}
+{% block body %}
+    {% csrf_token %}
+  <div class="container-fluid">
+  <div class="row d-flex justify-content-center">
+    <div class="col-4" style="margin-top: 250px">
+      <div class="card shadow mb-4">
+              {% csrf_token %}
+          <div class="card-header text-center">
+            ATM
+          </div>
+          <div class="card-body">
+              {{mess}}
+              {% if form %}
+              <form action="/main/transaction/" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <input type="hidden" id="client_id" name="client_id" value="{{client_id}}">
+                  <input type="hidden" id="value" name="value" value="{{value}}">
+                  {{form.sum}}
+                  <button type="submit" class="btn btn-link">Submit</button>
+              </form>
+              {% endif %}
+              {% if flag %}
+              <form action="/main/pechat/" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <input type="hidden" id="client_id1" name="client_id" value="{{client_id}}">
+                  <input type="hidden" id="flag" name="flag" value="{{flag}}">
+                  <input type="hidden" id="sum" name="sum" value="{{sum}}">
+                  <button type="submit" class="btn btn-link">Печать чека</button>
+              </form>
+              {% endif %}
+          </div>
+          <div class="card-footer text-center p-1">
+            {% if client_id %}
+              <a href="{% url 'ostatok_scheta' client_id=client_id %}">Остаток</a>
+              <a href="{% url 'snyatie' client_id=client_id %}">Снятие</a>
+              <a href="{% url 'popolnenie' client_id=client_id %}">Пополнение</a>
+            {% endif %}
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+  {% block main %}
+
+  {% endblock %}

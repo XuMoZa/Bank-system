@@ -1,0 +1,220 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+<script src="https://unpkg.com/imask"></script>
+<style>
+    .form_wrapper {
+        width: 500px;
+        margin: auto;
+    }
+
+    .field {
+         display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        margin: 20px;
+        list-style-type: none;
+    }
+    li {
+        padding: 15px;
+        background-color: blue;
+        color: white;
+    }
+
+    li:hover {
+        background-color: white;
+    }
+
+    li:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+
+    li:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+
+    a {
+        color: white;
+        padding: 20px;
+    }
+
+    a:hover {
+        color: black;
+        text-decoration: none;
+    }
+
+    #form_button {
+        position: relative;
+        background-color: blue;
+        border-radius: 10px;
+        border: 0;
+        color: white;
+        padding: 7px 10px;
+
+        width: 40%;
+
+        margin: 0 30% 10px 30%;
+
+    }
+</style>
+{% endblock %}
+{% block css_style %}
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+{% endblock %}
+{% block body %}
+    {% csrf_token %}
+    <nav>
+        <ul>
+            <li>
+                <a href="{% url 'main' %}">Главная</a>
+            </li>
+            <li>
+                <a href="{% url 'list' %}">Список</a>
+            </li>
+            <li>
+                <a href="{% url 'delete_client' client.id %}">Удалить клиента</a>
+            </li>
+            <li>
+                <a href="{% url 'deposit' client.id %}">Открыть депозитный счет</a>
+            </li>
+            <li>
+                <a href="{% url 'credit' client.id %}">Открыть кредитный счет</a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}
+{% block main %}
+<div class="form_wrapper">
+    <form action="/main/change/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" id="id" name="id" value="{{ client.id }}">
+
+
+        <div class="field">
+            <label for="name">Имя</label>
+            <input type="text" id="name" name="name" value="{{client.name}}" required>
+        </div>
+
+         <div class="field">
+            <label for="Surname">Фамилия</label>
+            <input type="text" id="Surname" name="Surname" value="{{client.surname}}" required>
+        </div>
+
+         <div class="field">
+            <label for="Second_name">Отчество</label>
+            <input type="text" id="Second_name" name="Second_name" value="{{client.second_name}}" required>
+        </div>
+
+         <div class="field">
+            <label for="birthdate">Дата рождения</label>
+            <input type="date" id="birthdate" name="birthdate" value="{{bd}}" required>
+        </div>
+
+        <div class="field">
+            <label for="seria">Серия паспорта</label>
+            <input type="text" id="seria" name="seria" value="{{client.seria}}" required>
+        </div>
+
+        <div class="field">
+            <label for="pass_num">Номер паспорта</label>
+            <input type="text" id="pass_num" name="pass_num" maxlength="7" minlength="7" value="{{client.pass_num}}" required>
+        </div>
+
+         <div class="field">
+            <label for="kem">Выдан</label>
+            <input type="text" id="kem" name="kem" value="{{client.kem}}" required>
+        </div>
+
+         <div class="field">
+            <label for="date_vidachi">Дата выдачи</label>
+            <input type="date" id="date_vidachi" name="date_vidachi" value="{{date_vidachi}}" required>
+        </div>
+
+        <div class="field">
+            <label for="idnum">Идентификационный номер</label>
+            <input type="text" id="idnum" name="idnum" maxlength="14" minlength="14" value="{{client.idnum}}" required>
+        </div>
+
+         <div class="field">
+            <label for="birthplace">Место рождения</label>
+            <input type="text" id="birthplace" name="birthplace" value="{{client.birthplace}}" required>
+        </div>
+
+         <div class="field">
+            <label>Город проживания</label>
+            {{formres.city_of_residence}}
+        </div>
+
+         <div class="field">
+            <label for="adress_residence">Адрес</label>
+            <input type="text" id="adress_residence" name="adress_residence" value="{{client.adress_residence}}" required>
+        </div>
+
+         <div class="field">
+            <label for="HomeNum">Домашний телефон</label>
+            <input type="text" id="HomeNum" name="HomeNum" maxlength="7" value="{{client.HomeNum}}">
+        </div>
+
+         <div class="field">
+            <label for="mobnum">Мобильный телефон</label>
+            <input type="text" id="mobnum" name="mobnum" maxlength="13" value="{{client.mobnum}}">
+        </div>
+
+        <div class="field">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" value="{{client.email}}">
+        </div>
+
+        <div class="field">
+            <label>Город проживания</label>
+            {{formliv.city_of_living}}
+        </div>
+
+        <div class="field">
+            <label for="adress_living">Адрес прописки</label>
+            <input type="text" id="adress_living" name="adress_living" value="{{client.adress_living}}" required>
+        </div>
+
+         <div class="field">
+            <label>Семейное положение</label>
+            {{formrel.relation}}
+        </div>
+
+        <div class="field">
+            <label>Гражданство</label>
+            {{formcitizen.citizen}}
+        </div>
+
+        <div class="field">
+            <label>Инвалидность</label>
+            {{formhand.handicap}}
+        </div>
+
+        <div class="field">
+            <label for="senior">Пенсионер</label>
+            <input type="checkbox" id="senior" name="senior" value="{{senior_state}}">
+        </div>
+
+        <input type="submit" value="Отправить изменения">
+    </form>
+
+    <form action='deposit_otozvat/' method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" id="id" name="id" value="{{ client.id }}">
+
+        <hr>
+        <input type="submit" value="Отозвать депозит">
+    </form>
+    </div>
+{% endblock %}

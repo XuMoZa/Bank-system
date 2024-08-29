@@ -1,0 +1,45 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/*nav {*/
+/*    display: flex;*/
+/*    justify-content: space-around;*/
+/*    align-items: center;*/
+/*}*/
+
+/*nav > ul {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    margin: 20px;*/
+/*    list-style-type: none;*/
+/*}*/
+
+/*nav > li {*/
+/*    padding: 15px;*/
+/*    background-color: blue;*/
+/*    color: white;*/
+/*}*/
+
+/*nav > li:hover {*/
+/*    background-color: white;*/
+/*}*/
+
+/*nav > li:last-child {*/
+/*    border-radius: 0 10px 10px 0;*/
+/*}*/
+
+/*nav > li:first-child {*/
+/*    border-radius: 10px 0 0 10px;*/
+/*}*/
+
+/*nav > a {*/
+/*    color: white;*/
+/*    padding: 20px;*/
+/*}*/
+
+/*a:hover {*/
+/*    color: black;*/
+/*    text-decoration: none;*/
+/*}*/

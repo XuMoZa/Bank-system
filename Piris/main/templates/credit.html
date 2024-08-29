@@ -1,0 +1,140 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+<script src="https://unpkg.com/imask"></script>
+<style>
+    .form_wrapper {
+        width: 500px;
+        margin: auto;
+    }
+
+    .field {
+         display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        margin: 20px;
+        list-style-type: none;
+    }
+    li {
+        padding: 15px;
+        background-color: blue;
+        color: white;
+    }
+
+    li:hover {
+        background-color: white;
+    }
+
+    li:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+
+    li:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+
+    a {
+        color: white;
+        padding: 20px;
+    }
+
+    a:hover {
+        color: black;
+        text-decoration: none;
+    }
+
+    #form_button {
+        position: relative;
+        background-color: blue;
+        border-radius: 10px;
+        border: 0;
+        color: white;
+        padding: 7px 10px;
+
+        width: 40%;
+
+        margin: 0 30% 10px 30%;
+
+    }
+</style>
+{% endblock %}
+{% block css_style %}
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+{% endblock %}
+{% block body %}
+    {% csrf_token %}
+    <nav>
+        <ul>
+            <li>
+                <a href="{% url 'main' %}">Главная</a>
+            </li>
+            <li>
+                 <a href="{% url 'list' %}">Список</a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}
+{% block main %}
+<div class="form_wrapper">
+    <form action="/main/credit_client/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" id="client_id" name="client_id" value="{{client.id}}">
+        <input type="hidden" id="name" name="name" value="{{client.name}}">
+        <input type="hidden" id="surname" name="surname" value="{{client.surname}}">
+        <input type="hidden" id="second_name" name="second_name" value="{{client.second_name}}">
+
+        <div class="field">
+            <label>Вид кредита</label>
+            {{formtype.credit_type}}
+        </div>
+
+         <div class="field">
+            <label for="number">Номер договора</label>
+            <input type="text" id="number" name="number" required>
+        </div>
+
+        <div class="field">
+            <label>Вид валюты</label>
+            {{valut.valut}}
+        </div>
+
+        <div class="field">
+            <label for="start_date">Дата начала</label>
+            <input type="date" id="start_date" name="start_date" required>
+        </div>
+
+        <div class="field">
+            <label for="finish_date">Дата окончания</label>
+            <input type="date" id="finish_date" name="finish_date" required>
+        </div>
+
+         <div class="field">
+            <label for="srok">Срок договора</label>
+            <input type="text" id="srok" name="srok" required>
+        </div>
+
+         <div class="field">
+            <label for="srok">Сумма кредита</label>
+            <input type="text" id="sum" name="sum" required>
+        </div>
+
+         <div class="field">
+            <label for="percent">Процент по кредиту</label>
+            <input type="text" id="percent" name="percent" required>
+        </div>
+
+        <input type="submit" id="form_button" value="Отправить">
+    </form>
+    </div>
+{% endblock %}

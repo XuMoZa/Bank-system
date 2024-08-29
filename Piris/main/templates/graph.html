@@ -1,0 +1,70 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+<script src="https://unpkg.com/imask"></script>
+<style>
+    nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    nav > ul {
+        display: flex;
+        flex-direction: row;
+        margin: 20px;
+        list-style-type: none;
+    }
+    nav > ul > li {
+        padding: 15px;
+        background-color: blue;
+        color: white;
+    }
+
+    nav > ul > li:hover {
+        background-color: white;
+    }
+
+    nav > ul > li:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+
+    nav > ul > li:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+
+    nav > ul > li > a {
+        color: white;
+        padding: 20px;
+    }
+
+    nav > ul > li > a:hover {
+        color: black;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+{% block css_style %}
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+{% endblock %}
+{% block body %}
+    {% csrf_token %}
+    <nav>
+        <ul>
+            <li>
+                 <a href="{% url 'main' %}">Главная</a>
+            </li>
+            <li>
+                 <a href="{% url 'list' %}">Список</a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}
+{% block main %}
+<ul>
+    {% for string in strings %}
+        <li><a>{{ string }}</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
